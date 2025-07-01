@@ -59,7 +59,7 @@ export default function MechanicPage() {
             <div className="relative">
               <div className="aspect-square bg-amber-100 rounded-2xl overflow-hidden">
                 <Image 
-                  src="/images/mechanic-hero.jpg"
+                  src="/images/ChatGPT Image Jul 1, 2025, 04_59_17 PM.png"
                   alt="Professional Mobile Mechanic at Work"
                   width={600}
                   height={600}

@@ -48,7 +48,7 @@ export default function ContactPage() {
                     >
                       {COMPANY_INFO.phone}
                     </a>
-                    <p className="text-sm text-gray-500 mt-1">Call for immediate assistance</p>
+                    <p className="text-sm text-gray-500 mt-1">Call or text 24/7 for emergencies</p>
                   </div>
                 </div>
 
@@ -64,7 +64,7 @@ export default function ContactPage() {
                     >
                       {COMPANY_INFO.email}
                     </a>
-                    <p className="text-sm text-gray-500 mt-1">We typically respond within 24 hours</p>
+                    <p className="text-sm text-gray-500 mt-1">We typically respond within 2 hours</p>
                   </div>
                 </div>
 
@@ -76,7 +76,7 @@ export default function ContactPage() {
                     <h3 className="text-lg font-semibold text-gray-900">Service Area</h3>
                     <p className="text-gray-700">{COMPANY_INFO.address}</p>
                     <p className="text-sm text-gray-500 mt-1">
-                      Serving: {COMPANY_INFO.serviceAreas.join(', ')}
+                      Serving Charlotte, NC & surrounding towns
                     </p>
                   </div>
                 </div>
@@ -88,7 +88,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="text-lg font-semibold text-gray-900">Business Hours</h3>
                     <p className="text-gray-700">{COMPANY_INFO.hours}</p>
-                    <p className="text-sm text-gray-500 mt-1">Emergency services available</p>
+                    <p className="text-sm text-gray-500 mt-1">24/7 emergency services available</p>
                   </div>
                 </div>
               </div>
@@ -100,14 +100,14 @@ export default function ContactPage() {
                   <h3 className="text-lg font-semibold text-red-900">Emergency Service</h3>
                 </div>
                 <p className="text-red-700 mb-3">
-                  For urgent plumbing, electrical, or automotive emergencies, call us immediately.
+                  For urgent plumbing, electrical, or automotive emergencies, call or text us immediately at (864) 743-3178.
                 </p>
                 <a 
                   href={`tel:${COMPANY_INFO.phone}`}
                   className="inline-flex items-center space-x-2 bg-red-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-red-700 transition-colors"
                 >
                   <Phone className="h-4 w-4" />
-                  <span>Emergency Call</span>
+                  <span>Emergency Call/Text</span>
                 </a>
               </div>
             </div>
@@ -126,7 +126,7 @@ export default function ContactPage() {
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Service Area</h2>
             <p className="text-lg text-gray-600">
-              We proudly serve the following areas with professional handyman and mobile mechanic services.
+              We proudly serve Charlotte, NC & surrounding towns including Matthews, Huntersville, Concord, Gastonia, and Belmont.
             </p>
           </div>
           

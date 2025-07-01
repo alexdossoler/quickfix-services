@@ -111,11 +111,11 @@ export const SERVICES: Record<string, Service> = {
 export const COMPANY_INFO = {
   name: 'QuickFix Services',
   tagline: 'Your trusted handyman and mobile mechanic',
-  phone: '(555) 123-4567',
-  email: 'info@quickfix-services.com',
-  address: '123 Service St, Your City, ST 12345',
-  hours: 'Mon-Fri: 7AM-7PM, Sat: 8AM-5PM, Sun: Emergency only',
-  serviceAreas: ['Downtown', 'Suburbs', 'Industrial District'],
+  phone: '(864) 743-3178',
+  email: 'info@quick-fix-handyman.com',
+  address: 'Charlotte, NC',
+  hours: 'Mon-Sun: 7AM-9PM, Emergency service available 24/7',
+  serviceAreas: ['Charlotte', 'Matthews', 'Huntersville', 'Concord', 'Gastonia', 'Belmont'],
   social: {
     facebook: 'https://facebook.com/quickfixservices',
     instagram: 'https://instagram.com/quickfixservices',
