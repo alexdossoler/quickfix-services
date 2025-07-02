@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { SERVICES } from '@/lib/services';
+import { SERVICES, QUALITY_WORK } from '@/lib/services';
 import { BookingModal } from '@/components/BookingModal';
 import { Star, CheckCircle, Phone } from 'lucide-react';
 import Link from 'next/link';
@@ -157,41 +157,31 @@ export default function HandymanPage() {
             More of Our Quality Work
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[
-              {
-                title: 'Faucet Repair',
-                desc: 'Fixed a leaking kitchen faucet & installed new cartridge',
-                img: '/images/faucet-repair.jpg',
-                alt: 'Professional faucet repair and plumbing service'
-              },
-              {
-                title: 'Furniture Assembly',
-                desc: 'Assembled flat-pack shelving - perfectly level',
-                img: '/images/quality-handyman.jpg',
-                alt: 'Handyman assembling furniture with precision'
-              },
-              {
-                title: 'Tire Service',
-                desc: 'Mobile tire change and automotive repair',
-                img: '/images/tire-change.jpg',
-                alt: 'Mobile mechanic tire service on-site'
-              }
-            ].map((item, index) => (
-              <div key={item.title} className="rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow">
-                <div className="relative">
-                  <Image
-                    src={item.img}
-                    alt={item.alt}
-                    width={500}
-                    height={400}
-                    className="object-cover w-full h-60 hover:scale-105 transition-transform duration-300"
-                    priority={index === 0}
-                  />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
-                    <h3 className="text-white font-semibold text-lg mb-1">{item.title}</h3>
-                    <p className="text-white/90 text-sm">{item.desc}</p>
+            {QUALITY_WORK.map((item, index) => (
+              <div key={item.title} className="overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-shadow">
+                {item.img ? (
+                  <div className="relative">
+                    <Image
+                      src={item.img}
+                      alt={item.alt}
+                      width={500}
+                      height={400}
+                      className="object-cover w-full h-60 hover:scale-105 transition-transform duration-300"
+                      priority={index === 0}
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                      <h3 className="text-white font-semibold text-lg">{item.title}</h3>
+                      <p className="text-white/90 text-sm">{item.desc}</p>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="flex h-60 items-center justify-center bg-amber-50 p-6">
+                    <div className="text-center">
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{item.title}</h3>
+                      <p className="text-gray-600">{item.desc}</p>
+                    </div>
+                  </div>
+                )}
               </div>
             ))}
           </div>

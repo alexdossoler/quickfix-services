@@ -122,3 +122,24 @@ export const COMPANY_INFO = {
     google: 'https://maps.google.com/quickfixservices'
   }
 };
+
+export const QUALITY_WORK = [
+  {
+    title: 'Faucet Repair',
+    desc: 'Fixed a leaking kitchen faucet & installed new cartridge.',
+    img: '/images/faucet-repair.jpg',
+    alt: 'Professional faucet repair and cartridge replacement'
+  },
+  {
+    title: 'Tire Change Service',
+    desc: 'Mobile tire replacement service - we come to you.',
+    img: '/images/tire-change.jpg',
+    alt: 'Mobile mechanic changing tire on-site'
+  },
+  {
+    title: 'Licensed & Insured',
+    desc: 'Peace of mind with every service call',
+    img: null, // Text-only card
+    alt: null
+  }
+];
