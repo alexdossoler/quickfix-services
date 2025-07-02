@@ -157,34 +157,43 @@ export default function HandymanPage() {
             More of Our Quality Work
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Mobile Mechanic Example */}
-            <div className="overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-shadow">
-              <Image
-                src="/images/quality-mechanic.jpg"
-                alt="Mobile mechanic replacing engine component on-site"
-                width={500}
-                height={500}
-                className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
-                priority
-              />
-            </div>
-            
-            {/* Handyman Example */}
-            <div className="overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-shadow">
-              <Image
-                src="/images/quality-handyman.jpg"
-                alt="Handyman assembling furniture and carpentry work"
-                width={500}
-                height={500}
-                className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-            
-            {/* Licensed & Insured Info Tile */}
-            <div className="bg-amber-50 rounded-lg p-8 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl transition-shadow">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Licensed & Insured</h3>
-              <p className="text-gray-600">Peace of mind with every service call</p>
-            </div>
+            {[
+              {
+                title: 'Faucet Repair',
+                desc: 'Fixed a leaking kitchen faucet & installed new cartridge',
+                img: '/images/faucet-repair.jpg',
+                alt: 'Professional faucet repair and plumbing service'
+              },
+              {
+                title: 'Furniture Assembly',
+                desc: 'Assembled flat-pack shelving - perfectly level',
+                img: '/images/quality-handyman.jpg',
+                alt: 'Handyman assembling furniture with precision'
+              },
+              {
+                title: 'Tire Service',
+                desc: 'Mobile tire change and automotive repair',
+                img: '/images/tire-change.jpg',
+                alt: 'Mobile mechanic tire service on-site'
+              }
+            ].map((item, index) => (
+              <div key={item.title} className="rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow">
+                <div className="relative">
+                  <Image
+                    src={item.img}
+                    alt={item.alt}
+                    width={500}
+                    height={400}
+                    className="object-cover w-full h-60 hover:scale-105 transition-transform duration-300"
+                    priority={index === 0}
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                    <h3 className="text-white font-semibold text-lg mb-1">{item.title}</h3>
+                    <p className="text-white/90 text-sm">{item.desc}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
