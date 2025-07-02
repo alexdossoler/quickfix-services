@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Hero } from '@/components/Hero';
 import { ServiceCard } from '@/components/ServiceCard';
 import { BookingModal } from '@/components/BookingModal';
-import { SERVICES } from '@/lib/services';
+import { SERVICES, COMPANY_INFO } from '@/lib/services';
 import { Shield, Clock, Award, MapPin } from 'lucide-react';
 
 export default function Home() {
@@ -98,10 +98,10 @@ export default function Home() {
               Book Service Now
             </button>
             <a 
-              href="tel:(555) 123-4567"
+              href={`tel:${COMPANY_INFO.phone}`}
               className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors text-lg"
             >
-              Call (555) 123-4567
+              Call {COMPANY_INFO.phone}
             </a>
           </div>
         </div>

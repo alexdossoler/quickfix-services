@@ -77,20 +77,15 @@ export function Hero() {
 
           {/* Right Column - Hero Image */}
           <div className="relative">
-            <div className="aspect-square bg-gradient-to-br from-blue-100 to-amber-100 rounded-2xl flex items-center justify-center">
-              {/* Placeholder for hero image/mascot */}
-              <div className="text-center">
-                <div className="w-48 h-48 bg-blue-600 rounded-full flex items-center justify-center mb-4 mx-auto overflow-hidden">
-                  <Image 
-                    src="/images/handyman-icon.svg" 
-                    alt="Professional handyman tools" 
-                    width={96} 
-                    height={96}
-                    className="object-contain"
-                  />
-                </div>
-                <p className="text-gray-600 font-medium">Professional Service</p>
-                <p className="text-gray-600">Home & Auto Repair</p>
+            <div className="w-full sm:h-[420px] md:h-[520px] lg:h-[560px] bg-gradient-to-br from-blue-100 to-amber-100 rounded-2xl overflow-hidden">
+              <div className="relative w-full h-full">
+                <Image
+                  src="/images/hero-composite.jpg"
+                  alt="Mobile mechanic and handyman professionals at work"
+                  fill
+                  priority
+                  className="object-cover"
+                />
               </div>
             </div>
             

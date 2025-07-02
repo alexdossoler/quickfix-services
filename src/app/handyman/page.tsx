@@ -59,7 +59,7 @@ export default function HandymanPage() {
             <div className="relative">
               <div className="aspect-square bg-blue-100 rounded-2xl overflow-hidden">
                 <Image 
-                  src="/images/handyman-hero.jpg"
+                  src="/images/a0c0eac427a8d206c3f6d630d747cfe9.png"
                   alt="Professional Handyman at Work"
                   width={600}
                   height={600}
