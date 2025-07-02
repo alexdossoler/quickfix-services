@@ -137,9 +137,9 @@ export const QUALITY_WORK = [
     alt: 'Mobile mechanic changing tire on-site'
   },
   {
-    title: 'Licensed & Insured',
-    desc: 'Peace of mind with every service call',
-    img: null, // Text-only card
-    alt: null
+    title: 'Electrical Install',
+    desc: 'Professional electrical work - outlets, switches & lighting.',
+    img: '/images/electrical-install.jpg',
+    alt: 'Handyman installing electrical outlets and switches'
   }
 ];
