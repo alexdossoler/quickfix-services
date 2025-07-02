@@ -157,26 +157,33 @@ export default function HandymanPage() {
             More of Our Quality Work
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-              <Image 
-                src="/images/handyman-1.png"
-                alt="Professional handyman service"
-                width={400}
-                height={400}
-                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            {/* Mobile Mechanic Example */}
+            <div className="overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-shadow">
+              <Image
+                src="/images/quality-mechanic.jpg"
+                alt="Mobile mechanic replacing engine component on-site"
+                width={500}
+                height={500}
+                className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
+                priority
               />
             </div>
-            <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow bg-blue-50 flex items-center justify-center">
-              <div className="text-center p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Quality Workmanship</h3>
-                <p className="text-gray-600">Every job completed to the highest standards</p>
-              </div>
+            
+            {/* Handyman Example */}
+            <div className="overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-shadow">
+              <Image
+                src="/images/quality-handyman.jpg"
+                alt="Handyman assembling furniture and carpentry work"
+                width={500}
+                height={500}
+                className="object-cover w-full h-full hover:scale-105 transition-transform duration-300"
+              />
             </div>
-            <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow bg-amber-50 flex items-center justify-center">
-              <div className="text-center p-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">Licensed & Insured</h3>
-                <p className="text-gray-600">Peace of mind with every service call</p>
-              </div>
+            
+            {/* Licensed & Insured Info Tile */}
+            <div className="bg-amber-50 rounded-lg p-8 flex flex-col items-center justify-center text-center shadow-sm hover:shadow-xl transition-shadow">
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Licensed & Insured</h3>
+              <p className="text-gray-600">Peace of mind with every service call</p>
             </div>
           </div>
         </div>
