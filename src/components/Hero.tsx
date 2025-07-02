@@ -80,11 +80,11 @@ export function Hero() {
             <div className="w-full sm:h-[420px] md:h-[520px] lg:h-[560px] bg-gradient-to-br from-blue-100 to-amber-100 rounded-2xl overflow-hidden">
               <div className="relative w-full h-full">
                 <Image
-                  src="/images/hero-composite.jpg"
-                  alt="Mobile mechanic and handyman professionals at work"
+                  src="/images/hero-composite.png"
+                  alt="Mobile mechanic and handyman at work"
                   fill
                   priority
-                  className="object-cover"
+                  className="object-cover rounded-md"
                 />
               </div>
             </div>
