@@ -103,24 +103,81 @@ export default function HandymanPage() {
         </div>
       </section>
 
-      {/* Services Gallery */}
+      {/* Featured Service Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-            Our Work in Action
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="relative aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                <Image 
-                  src={`/images/handyman-${num}.jpg`}
-                  alt={`Handyman service example ${num}`}
-                  width={300}
-                  height={300}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                Professional TV Mounting & Electrical Work
+              </h2>
+              <p className="text-lg text-gray-600 mb-6">
+                Our skilled technicians handle everything from TV mounting to electrical installations with precision and care. We ensure your home entertainment setup is both functional and aesthetically pleasing.
+              </p>
+              <ul className="space-y-3">
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+                  <span className="text-gray-700">Professional TV mounting on any wall type</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+                  <span className="text-gray-700">Cable management and wire concealment</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+                  <span className="text-gray-700">Safe electrical connections and outlet installation</span>
+                </li>
+                <li className="flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-green-500 flex-shrink-0" />
+                  <span className="text-gray-700">Clean, professional finish guaranteed</span>
+                </li>
+              </ul>
+            </div>
+            
+            <div className="relative">
+              <Image
+                src="/images/handyman-faucet.png"
+                alt="Handyman mounting TV and electrical work"
+                width={600}
+                height={600}
+                className="rounded-lg object-cover shadow-lg"
+              />
+              <div className="absolute -bottom-4 -right-4 bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg">
+                <span className="font-semibold">Professional Service</span>
               </div>
-            ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Gallery */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
+            More of Our Quality Work
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+              <Image 
+                src="/images/handyman-1.png"
+                alt="Professional handyman service"
+                width={400}
+                height={400}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+            <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow bg-blue-50 flex items-center justify-center">
+              <div className="text-center p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Quality Workmanship</h3>
+                <p className="text-gray-600">Every job completed to the highest standards</p>
+              </div>
+            </div>
+            <div className="relative aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow bg-amber-50 flex items-center justify-center">
+              <div className="text-center p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Licensed & Insured</h3>
+                <p className="text-gray-600">Peace of mind with every service call</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
