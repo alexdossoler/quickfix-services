@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { SERVICES, QUALITY_WORK } from '@/lib/services';
+import { SERVICES, QUALITY_WORK, COMPANY_INFO } from '@/lib/services';
 import { BookingModal } from '@/components/BookingModal';
 import { Star, CheckCircle, Phone } from 'lucide-react';
 import Link from 'next/link';
@@ -46,11 +46,11 @@ export default function HandymanPage() {
                   Book Handyman Service
                 </button>
                 <a 
-                  href="tel:(555) 123-4567"
+                  href={`tel:${COMPANY_INFO.phone}`}
                   className="flex items-center justify-center space-x-2 border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-lg font-semibold hover:bg-blue-50 transition-colors text-lg"
                 >
                   <Phone className="h-5 w-5" />
-                  <span>Call Now</span>
+                  <span>Call {COMPANY_INFO.phone}</span>
                 </a>
               </div>
             </div>
@@ -59,8 +59,8 @@ export default function HandymanPage() {
             <div className="relative">
               <div className="aspect-square bg-blue-100 rounded-2xl overflow-hidden">
                 <Image 
-                  src="/images/a0c0eac427a8d206c3f6d630d747cfe9.png"
-                  alt="Professional Handyman at Work"
+                  src="/images/handyman-faucet.png"
+                  alt="Professional Handyman TV Mounting and Electrical Work"
                   width={600}
                   height={600}
                   className="w-full h-full object-cover"
