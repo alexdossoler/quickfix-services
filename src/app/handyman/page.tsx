@@ -59,8 +59,8 @@ export default function HandymanPage() {
             <div className="relative">
               <div className="aspect-square bg-blue-100 rounded-2xl overflow-hidden">
                 <Image 
-                  src="/images/handyman-faucet.png"
-                  alt="Professional Handyman TV Mounting and Electrical Work"
+                  src="/images/handyman-hero.jpg"
+                  alt="Handyman assembling furniture"
                   width={600}
                   height={600}
                   className="w-full h-full object-cover"
