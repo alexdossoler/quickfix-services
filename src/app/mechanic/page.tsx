@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
-import { SERVICES } from '@/lib/services';
+import { SERVICES, COMPANY_INFO } from '@/lib/services';
 import { BookingModal } from '@/components/BookingModal';
+import MobileServiceGallery from '@/components/MobileServiceGallery';
 import { Star, CheckCircle, Phone } from 'lucide-react';
 import Link from 'next/link';
 
@@ -46,11 +47,11 @@ export default function MechanicPage() {
                   Book Mobile Mechanic
                 </button>
                 <a 
-                  href="tel:(555) 123-4567"
+                  href={`tel:${COMPANY_INFO.phone}`}
                   className="flex items-center justify-center space-x-2 border-2 border-amber-600 text-amber-600 px-8 py-4 rounded-lg font-semibold hover:bg-amber-50 transition-colors text-lg"
                 >
                   <Phone className="h-5 w-5" />
-                  <span>Call Now</span>
+                  <span>Call {COMPANY_INFO.phone}</span>
                 </a>
               </div>
             </div>
@@ -139,27 +140,8 @@ export default function MechanicPage() {
         </div>
       </section>
 
-      {/* Services Gallery */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-            Our Mobile Service in Action
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[1, 2, 3, 4].map((num) => (
-              <div key={num} className="relative aspect-square rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
-                <Image 
-                  src={`/images/mechanic-${num}.jpg`}
-                  alt={`Mobile mechanic service example ${num}`}
-                  width={300}
-                  height={300}
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Mobile Service Gallery */}
+      <MobileServiceGallery />
 
       {/* FAQ Section */}
       <section className="py-16 bg-white">
