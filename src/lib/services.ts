@@ -29,10 +29,10 @@ export const SERVICES: Record<string, Service> = {
       'Tile & flooring work'
     ],
     gallery: [
-      '/images/handyman-1.jpg',
-      '/images/handyman-2.jpg',
-      '/images/handyman-3.jpg',
-      '/images/handyman-4.jpg'
+      '/images/handyman-carpentry.png',
+      '/images/handyman-electrical.png', 
+      '/images/handyman-plumbing.png',
+      '/images/Generated Image July 02, 2025 - 2_15PM.jpeg'
     ],
     features: [
       'Licensed & Insured',
@@ -125,21 +125,21 @@ export const COMPANY_INFO = {
 
 export const QUALITY_WORK = [
   {
-    title: 'Faucet Repair',
-    desc: 'Fixed a leaking kitchen faucet & installed new cartridge.',
-    img: '/images/faucet-repair.jpg',
-    alt: 'Professional faucet repair and cartridge replacement'
-  },
-  {
-    title: 'Tire Change Service',
-    desc: 'Mobile tire replacement service - we come to you.',
-    img: '/images/tire-change.jpg',
-    alt: 'Mobile mechanic changing tire on-site'
-  },
-  {
     title: 'Electrical Install',
     desc: 'Professional electrical work - outlets, switches & lighting.',
     img: '/images/electrical-install.jpg',
     alt: 'Handyman installing electrical outlets and switches'
+  },
+  {
+    title: 'Carpentry Work',
+    desc: 'Custom furniture assembly and woodworking projects.',
+    img: '/images/handyman-carpentry.png',
+    alt: 'Professional carpentry and furniture assembly'
+  },
+  {
+    title: 'Plumbing Services',
+    desc: 'Reliable plumbing repairs and fixture installations.',
+    img: '/images/handyman-plumbing.png', 
+    alt: 'Expert plumbing repair and installation services'
   }
 ];

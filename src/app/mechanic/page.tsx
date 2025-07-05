@@ -60,7 +60,7 @@ export default function MechanicPage() {
             <div className="relative">
               <div className="aspect-square bg-amber-100 rounded-2xl overflow-hidden">
                 <Image 
-                  src="/images/11a3e0b94e720662581f9fda132f0954.png"
+                  src="/images/image (7).png"
                   alt="Professional Mobile Mechanic at Work"
                   width={600}
                   height={600}
