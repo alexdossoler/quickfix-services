@@ -1,3 +1,4 @@
+// QuickFix Services Data - Updated July 4, 2025
 export interface Service {
   title: string;
   slug: string;
