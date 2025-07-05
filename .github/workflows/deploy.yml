@@ -56,7 +56,9 @@ jobs:
         ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST << 'EOF'
           cd $DEPLOY_PATH
           tar -xzf deployment.tar.gz
-          npm ci --production
+          npm ci --only=production
+          sudo mkdir -p logs
           pm2 reload quickfix-services || pm2 start ecosystem.config.js
           rm deployment.tar.gz
+          echo "✅ QuickFix Services deployed successfully!"
         EOF
