@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import sgMail from '@sendgrid/mail';
 
 interface ContactData {
   name: string;
@@ -8,38 +9,73 @@ interface ContactData {
   subject?: string;
   message: string;
   type: string;
+  address?: string;
+  preferredDate?: string;
+  preferredTime?: string;
+  urgency?: string;
 }
 
-// Mock email function - replace with SendGrid in production
+// Real SendGrid email function
 async function sendEmail(data: ContactData) {
-  // In production, you would use SendGrid here:
-  // const sgMail = require('@sendgrid/mail');
-  // sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+  const apiKey = process.env.SENDGRID_API_KEY;
   
-  console.log('📧 Email would be sent with data:', {
-    to: 'info@quickfix-services.com',
-    from: 'noreply@quickfix-services.com',
-    subject: `New ${data.type} from ${data.name}`,
-    text: `
-      Name: ${data.name}
-      Email: ${data.email}
-      Phone: ${data.phone || 'Not provided'}
-      Service: ${data.service || data.subject || 'General inquiry'}
-      Message: ${data.message}
-    `,
-    html: `
-      <h3>New ${data.type} Request</h3>
+  // If no API key or test key, log to console instead
+  if (!apiKey || apiKey === 'test_key_console_only') {
+    console.log('📧 BOOKING NOTIFICATION (Console Mode):', {
+      type: data.type === 'booking' ? 'BOOKING REQUEST' : 'CONTACT FORM',
+      name: data.name,
+      phone: data.phone,
+      email: data.email,
+      service: data.service,
+      address: data.address,
+      preferredDate: data.preferredDate,
+      preferredTime: data.preferredTime,
+      urgency: data.urgency,
+      message: data.message
+    });
+    return { success: true };
+  }
+
+  // Real SendGrid email
+  sgMail.setApiKey(apiKey);
+  const toEmail = 'info@quick-fix-handyman.com';
+  const subject = `New ${data.type === 'booking' ? 'Booking' : 'Contact'} from ${data.name}`;
+  const html = `
+    <h2>🛠️ QuickFix Services - New ${data.type === 'booking' ? 'Booking Request' : 'Contact Form'}</h2>
+    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; font-family: Arial, sans-serif;">
+      <h3 style="color: #2563eb; margin-top: 0;">Customer Information</h3>
       <p><strong>Name:</strong> ${data.name}</p>
-      <p><strong>Email:</strong> ${data.email}</p>
-      <p><strong>Phone:</strong> ${data.phone || 'Not provided'}</p>
-      <p><strong>Service:</strong> ${data.service || data.subject || 'General inquiry'}</p>
-      <p><strong>Message:</strong></p>
-      <p>${data.message}</p>
-    `
-  });
+      <p><strong>Email:</strong> <a href="mailto:${data.email}">${data.email}</a></p>
+      <p><strong>Phone:</strong> <a href="tel:${data.phone}">${data.phone || 'Not provided'}</a></p>
+      
+      <h3 style="color: #2563eb;">Service Details</h3>
+      <p><strong>Service Requested:</strong> ${data.service || data.subject || 'General inquiry'}</p>
+      ${data.address ? `<p><strong>Service Address:</strong> ${data.address}</p>` : ''}
+      ${data.preferredDate ? `<p><strong>Preferred Date:</strong> ${data.preferredDate}</p>` : ''}
+      ${data.preferredTime ? `<p><strong>Preferred Time:</strong> ${data.preferredTime}</p>` : ''}
+      ${data.urgency ? `<p><strong>Urgency Level:</strong> <span style="color: ${data.urgency === 'emergency' ? '#dc2626' : data.urgency === 'same-day' ? '#f59e0b' : '#16a34a'};">${data.urgency.charAt(0).toUpperCase() + data.urgency.slice(1)}</span></p>` : ''}
+      
+      ${data.message ? `<h3 style="color: #2563eb;">Customer Message</h3><p style="background: white; padding: 15px; border-radius: 4px; border-left: 4px solid #2563eb;">${data.message}</p>` : ''}
+      
+      <hr style="margin: 20px 0;">
+      <p style="color: #6b7280; font-size: 14px;">
+        <strong>Next Steps:</strong><br>
+        1. Contact customer within 2 hours<br>
+        2. Confirm availability for requested date/time<br>
+        3. Provide free estimate<br>
+        4. Schedule the service
+      </p>
+    </div>
+  `;
   
-  // Simulate API call delay
-  await new Promise(resolve => setTimeout(resolve, 500));
+  const msg = {
+    to: toEmail,
+    from: 'noreply@charlotteservicehub.com',
+    subject,
+    html,
+  };
+  
+  await sgMail.send(msg);
   return { success: true };
 }
 
