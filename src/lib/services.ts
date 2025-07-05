@@ -64,7 +64,7 @@ export const SERVICES: Record<string, Service> = {
   mechanic: {
     title: 'Mobile Mechanic',
     slug: 'mechanic',
-    heroImg: '/images/mechanic-hero.jpg',
+    heroImg: '/images/quality-mechanic.jpg',
     description: 'Professional automotive services that come to you. No need to visit a shop - we bring expert car care directly to your location.',
     priceRange: '$75 - $300/service',
     bullets: [
@@ -76,10 +76,10 @@ export const SERVICES: Record<string, Service> = {
       'Starter & alternator service'
     ],
     gallery: [
-      '/images/mechanic-1.jpg',
-      '/images/mechanic-2.jpg',
-      '/images/mechanic-3.jpg',
-      '/images/mechanic-4.jpg'
+      '/images/mechanic-1.png',
+      '/images/quality-mechanic.jpg',
+      '/images/mechanic-hero.jpg',
+      '/images/tire-change.jpg'
     ],
     features: [
       'ASE Certified Technicians',
