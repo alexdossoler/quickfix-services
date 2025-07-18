@@ -74,10 +74,13 @@ jobs:
             
             # Install dependencies and build
             echo "📦 Installing dependencies..."
-            npm ci --only=production
+            npm ci                            # <-- removed --only=production
             
             echo "🏗️ Building application..."
             npm run build
+            
+            # (optional) slim back down
+            npm prune --production
             
             # Copy environment file
             cp .env.production .env.local
