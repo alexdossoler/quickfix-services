@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import sgMail from '@sendgrid/mail';
+import { processLead, sendToCRM } from '@/lib/crm';
+import { CRMConfig } from '@/lib/crm-types';
 
 interface ContactData {
   name: string;
@@ -100,13 +102,65 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send email
+    // Save to internal CRM system
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/api/crm/leads`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          service: data.service,
+          message: data.message,
+          type: data.type,
+          address: data.address,
+          preferredDate: data.preferredDate,
+          preferredTime: data.preferredTime,
+          urgency: data.urgency,
+          source: 'website'
+        })
+      });
+      
+      if (response.ok) {
+        console.log('✅ Lead saved to internal CRM');
+      } else {
+        console.warn('⚠️ Failed to save lead to internal CRM');
+      }
+    } catch (error) {
+      console.warn('⚠️ Error saving to internal CRM:', error);
+    }
+
+    // Process lead and send to external CRM if configured
+    const leadData = processLead({
+      ...data,
+      source: 'website'
+    }, 'website');
+    
+    const crmConfig: CRMConfig | null = getCRMConfig();
+    if (crmConfig) {
+      try {
+        const crmSuccess = await sendToCRM(leadData, crmConfig);
+        if (crmSuccess) {
+          console.log('✅ Lead sent to CRM successfully');
+        } else {
+          console.log('⚠️ Failed to send lead to CRM');
+        }
+      } catch (crmError) {
+        console.error('CRM integration error:', crmError);
+      }
+    }
+
+    // Send email notification
     await sendEmail(data);
 
     return NextResponse.json(
       { 
         success: true, 
-        message: 'Your message has been sent successfully!' 
+        message: 'Your message has been sent successfully!',
+        leadScore: leadData.leadScore 
       },
       { status: 200 }
     );
@@ -121,6 +175,40 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+// Get CRM configuration from environment variables
+function getCRMConfig(): CRMConfig | null {
+  const provider = process.env.CRM_PROVIDER;
+  const apiUrl = process.env.CRM_API_URL;
+  const apiKey = process.env.CRM_API_KEY;
+  const database = process.env.CRM_DATABASE;
+  const username = process.env.CRM_USERNAME;
+  const password = process.env.CRM_PASSWORD;
+  
+  if (!provider || !apiUrl) {
+    return null;
+  }
+  
+  // Different CRMs require different credentials
+  if (provider === 'espocrm' && (!username || !password)) {
+    console.warn('EspoCRM requires username and password');
+    return null;
+  }
+  
+  if ((provider === 'airtable' || provider === 'hubspot') && !apiKey) {
+    console.warn(`${provider} requires API key`);
+    return null;
+  }
+  
+  return {
+    provider: provider as 'airtable' | 'hubspot' | 'pipedrive' | 'espocrm',
+    apiUrl,
+    apiKey: apiKey || '',
+    database,
+    username,
+    password
+  };
 }
 
 export async function GET() {

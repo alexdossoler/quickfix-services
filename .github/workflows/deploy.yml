@@ -1,33 +1,158 @@
-name: Deploy to Droplet
+name: Deploy QuickFix CRM to Production
 
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:       # Manual trigger - adds "Run workflow" button
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - production
+        - staging
+      confirm:
+        description: 'Type "deploy" to confirm'
+        required: true
+        default: ''
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
+    if: github.event.inputs.confirm == 'deploy'
+    
+    environment: production  # GitHub environment protection
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
+      - name: 🏗️ Checkout code
+        uses: actions/checkout@v4
         
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Run tests (if any)
-      run: npm run lint
-      
-    - name: Build application
-      run: npm run build
+      - name: 🔐 Add SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DROPLET_SSH_KEY }}
+          
+      - name: 🚀 Deploy to server
+        run: |
+          # Add server to known hosts
+          ssh-keyscan -H 167.71.163.98 >> ~/.ssh/known_hosts
+          
+          # Create deployment package
+          tar --exclude='node_modules' \
+              --exclude='.git' \
+              --exclude='*.tar.gz' \
+              --exclude='.github' \
+              --exclude='.next' \
+              -czf quickfix-deploy.tar.gz .
+          
+          # Upload to server
+          scp quickfix-deploy.tar.gz root@167.71.163.98:/tmp/
+          
+          # Deploy on server
+          ssh root@167.71.163.98 << 'DEPLOY_SCRIPT'
+            set -e
+            
+            APP_PATH="/var/www/quickfix-services"
+            APP_NAME="quickfix-services"
+            
+            echo "🔧 Deploying QuickFix CRM..."
+            
+            # Backup current version
+            if [ -d "$APP_PATH" ]; then
+              echo "📦 Creating backup..."
+              tar -czf "/tmp/quickfix-backup-$(date +%Y%m%d-%H%M%S).tar.gz" -C "$APP_PATH" .
+            fi
+            
+            # Create app directory
+            mkdir -p $APP_PATH
+            cd $APP_PATH
+            
+            # Extract new version
+            echo "📦 Extracting application..."
+            tar -xzf /tmp/quickfix-deploy.tar.gz
+            rm /tmp/quickfix-deploy.tar.gz
+            
+            # Install dependencies and build
+            echo "📦 Installing dependencies..."
+            npm ci --only=production
+            
+            echo "🏗️ Building application..."
+            npm run build
+            
+            # Copy environment file
+            cp .env.production .env.local
+            
+            # Restart application
+            echo "🔄 Restarting application..."
+            pm2 delete $APP_NAME 2>/dev/null || true
+            pm2 start ecosystem.config.js
+            pm2 save
+            
+            # Test health endpoint
+            echo "🏥 Testing health endpoint..."
+            sleep 5
+            if curl -f http://localhost:3001/api/health > /dev/null 2>&1; then
+              echo "✅ Health check passed!"
+            else
+              echo "❌ Health check failed!"
+              pm2 logs $APP_NAME --lines 20
+              exit 1
+            fi
+            
+            echo "✅ Deployment completed successfully!"
+            pm2 status
+          DEPLOY_SCRIPT
+          
+      - name: 🎉 Deployment Summary
+        run: |
+          echo "## 🚀 Deployment Successful!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Time:** $(date)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔗 Live URLs:" >> $GITHUB_STEP_SUMMARY
+          echo "- **Main Site:** http://167.71.163.98" >> $GITHUB_STEP_SUMMARY
+          echo "- **CRM Login:** http://167.71.163.98/admin/login" >> $GITHUB_STEP_SUMMARY
+          echo "- **CRM Dashboard:** http://167.71.163.98/crm" >> $GITHUB_STEP_SUMMARY
+          echo "- **Health Check:** http://167.71.163.98/api/health" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🔐 Admin Credentials:" >> $GITHUB_STEP_SUMMARY
+          echo "- **Username:** admin" >> $GITHUB_STEP_SUMMARY
+          echo "- **Password:** QuickFix2025!Production" >> $GITHUB_STEP_SUMMARY
+
+  rollback:
+    runs-on: ubuntu-latest
+    if: failure() && github.event.inputs.confirm == 'deploy'
+    needs: deploy
+    
+    steps:
+      - name: 🔄 Rollback on failure
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DROPLET_SSH_KEY }}
+          
+      - name: 🚨 Emergency rollback
+        run: |
+          ssh root@167.71.163.98 << 'ROLLBACK_SCRIPT'
+            APP_PATH="/var/www/quickfix-services"
+            APP_NAME="quickfix-services"
+            
+            echo "🚨 Rolling back to previous version..."
+            
+            # Find latest backup
+            BACKUP=$(ls -t /tmp/quickfix-backup-*.tar.gz 2>/dev/null | head -1)
+            
+            if [ -n "$BACKUP" ]; then
+              echo "📦 Restoring from: $BACKUP"
+              cd $APP_PATH
+              tar -xzf "$BACKUP"
+              pm2 restart $APP_NAME
+              echo "✅ Rollback completed!"
+            else
+              echo "❌ No backup found for rollback!"
+            fi
+          ROLLBACK_SCRIPT
       
     - name: Deploy to Droplet
       if: github.ref == 'refs/heads/main'

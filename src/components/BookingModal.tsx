@@ -57,15 +57,26 @@ export function BookingModal({ isOpen, onClose, preSelectedService }: BookingMod
   const onSubmit = async (data: BookingFormData) => {
     setIsSubmitting(true);
     try {
-      const response = await fetch('/api/contact', {
+      // Post directly to Formspree for instant email delivery
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('phone', data.phone);
+      formData.append('email', data.email);
+      formData.append('service', data.service);
+      formData.append('address', data.address);
+      formData.append('preferredDate', data.preferredDate);
+      formData.append('preferredTime', data.preferredTime);
+      formData.append('urgency', data.urgency);
+      formData.append('message', data.message);
+      formData.append('type', 'booking');
+      formData.append('_subject', `New Booking Request from ${data.name} - ${data.service}`);
+
+      const response = await fetch('https://formspree.io/f/xwpbawgq', {
         method: 'POST',
+        body: formData,
         headers: {
-          'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
-        body: JSON.stringify({
-          ...data,
-          type: 'booking'
-        }),
       });
 
       if (response.ok) {
