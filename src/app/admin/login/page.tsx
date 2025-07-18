@@ -109,7 +109,7 @@ export default function AdminLogin() {
           
           <div className="text-center">
             <p className="text-xs text-gray-500">
-              Default: admin / quickfix2025
+              Default: admin / QuickFix2025!Production
             </p>
           </div>
         </form>
